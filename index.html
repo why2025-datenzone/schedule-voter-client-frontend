@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/static/frontend/images/vote.svg" />
+    <link href="/src/index.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>%VITE_TITLE%</title>
+  </head>
+  <body id="root" class="font-sans antialiased bg-gray-100 dark:bg-slate-900 text-gray-900 dark:text-gray-200 leading-relaxed overflow-x-hidden relative min-h-screen">
+    <!-- App Configuration using Data Attributes -->
+    <div
+      id="app-config-data"
+      data-api-base-url="%VITE_APIPREFIX%" 
+      data-submissions-polling-interval-ms="35000"
+      data-submissions-stale-time-ms="34000"
+      data-submissions-initial-load-max-retries="6"
+      data-submissions-polling-max-retries="2"
+      data-submissions-initial-retry-base-delay-ms="1200"
+      data-submissions-initial-retry-max-delay-ms="15000"
+      data-submissions-polling-retry-base-delay-ms="1500"
+      data-submissions-polling-retry-max-delay-ms="40000"
+      data-votes-local-storage-name="%VITE_STORAGE%"
+      data-votes-send-debounce-ms="1500"
+      data-votes-initial-retry-delay-ms="2500"
+      data-votes-max-retry-delay-ms="35000"
+      style="display: none;"
+    ></div>
+    <!-- End App Configuration -->
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

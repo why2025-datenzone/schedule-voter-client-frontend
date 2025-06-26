@@ -1,0 +1,62 @@
+/* /home/erik/projekte/why2025-schedule-voter/schedule-voter-frontend/src/index.css */
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+/*
+:root {
+  color-scheme: light dark;
+}
+*/
+
+body {
+  /* Apply background image - Tailwind doesn't have a direct utility for complex embedded SVG backgrounds */
+ background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(100,100,150,0.1)' fill-opacity='0.4'%3E%3Cpath fill-rule='evenodd' d='M10 10h4v4h-4v-4zm12 12h4v4h-4v-4zm12 0h4v4h-4v-4zm12 0h4v4h-4v-4zm-40 0h4v4h-4v-4zm0-12h4v4h-4v-4zm12 0h4v4h-4v-4zm12 0h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E");
+ background-attachment: fixed;
+}
+@keyframes pulse {
+ 0%, 100% { opacity: 1; }
+ 50% { opacity: 0.5; }
+}
+.animate-pulse {
+ animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Custom class for accordion content transition */
+.submission-content {
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  max-height: 0;
+  overflow: hidden;
+}
+.submission-item.expanded .submission-content {
+ max-height: 1000px; /* Or a sufficiently large value */
+ padding-top: 0.5rem; /* Equivalent to pt-2 */
+ padding-bottom: 1rem; /* Equivalent to pb-4 */
+}
+
+
+/* Custom classes for side menu transitions */
+.side-menu-folded {
+  transition: right 0.3s ease-out, opacity 0.3s ease-out;
+  /* Base position is right-2 via Tailwind */
+ }
+ .side-menu-folded.hidden-folded {
+   right: -100px; /* Move off-screen */
+   opacity: 0;   /* Fade out */
+   pointer-events: none; /* Prevent interaction when hidden */
+ }
+ 
+ .side-menu-unfolded {
+  transition: right 0.3s ease-out;
+  /* Base position is right-[-350px] via Tailwind */
+ }
+ .side-menu-unfolded.visible {
+  right: 0; /* Slide into view */
+ }
+ 
+ /* Custom classes for notification transition */
+#clipboard-notification {
+ transition: bottom 0.3s ease-out, opacity 0.3s ease-out;
+}
+#clipboard-notification.show {
+  bottom: 2rem; /* bottom-8 */
+  opacity: 1;
+}
