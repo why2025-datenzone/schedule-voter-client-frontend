@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useAppStore, SubmissionData } from '../store';
 import { VoteButtons } from './VoteButtons'; 
+import { IoMdEye } from "react-icons/io";
+
 
 interface SubmissionItemProps {
   submissionCode: string;
@@ -10,6 +12,7 @@ interface SubmissionItemProps {
 export function SubmissionItem({ submissionCode, data }: Readonly<SubmissionItemProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const setExpanded = useAppStore((state) => state.setExpanded);
+  const voteState = useAppStore((state) => state.votes[submissionCode]);
 
   const handleToggle = () => {
     const newState = !isOpen;
@@ -19,11 +22,31 @@ export function SubmissionItem({ submissionCode, data }: Readonly<SubmissionItem
     }
   };
 
+  const getIndicatorIcon = () => {
+    if (!voteState?.expanded) {
+      return null;
+    }
+
+    let colorClass = 'text-neutral-500 dark:text-neutral-400';
+    if (voteState.vote === 'up') {
+      colorClass = 'text-green-600 dark:text-green-500';
+    } else if (voteState.vote === 'down') {
+      colorClass = 'text-red-600 dark:text-red-500';
+    }
+
+    return <IoMdEye className={colorClass} />;
+  };
+
+  const indicatorIcon = getIndicatorIcon();
+
   return (
     <div className={`submission-item bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 mb-3 rounded-md overflow-hidden transition-shadow duration-200 hover:shadow-lg group ${isOpen ? 'expanded' : ''}`} data-id={`event-${submissionCode}`}>
       <button className="submission-title px-4 py-3 w-full cursor-pointer flex justify-between items-center font-semibold text-base md:text-lg transition-colors duration-200 select-none hover:bg-gray-50 dark:hover:bg-slate-700/50" aria-expanded={isOpen} aria-controls={`content-${submissionCode}`} onClick={handleToggle}>
         <span className="text-left">{data.title}</span>
-        <svg className={`accordion-icon w-5 h-5 ml-2 transition-transform duration-200 ease-out  ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        <div className="flex items-center gap-2">
+          {indicatorIcon}
+          <svg className={`accordion-icon w-5 h-5 ml-2 transition-transform duration-200 ease-out  ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
       </button>
       <section className="submission-content px-4" id={`content-${submissionCode}`} aria-labelledby={`title-${submissionCode}`}>
           <div 
